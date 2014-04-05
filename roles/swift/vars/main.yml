@@ -1,0 +1,45 @@
+component: swift
+packages:
+  - memcached
+  - python-keystoneclient
+  - python-memcache
+  - python-swiftclient
+  - python-webob
+  - "{{ component }}"
+  - "{{ component }}-proxy"
+services:
+  - memcached
+  - "{{ component }}-proxy"
+config_files:
+  - "{{ component }}.conf"
+  - proxy-server.conf
+storage_ip: "{{ hostvars[ansible_hostname]|find_ip(storage_network) }}"
+replication_ip: "{{ hostvars[ansible_hostname]|find_ip(replication_network) }}"
+component: swift
+packages:
+  - python-xattr
+  - rsync
+  - "{{ component }}"
+  - "{{ component }}-account"
+  - "{{ component }}-container"
+  - "{{ component }}-object"
+  - xfsprogs
+services:
+  - rsync
+  - "{{ component }}-account"
+  - "{{ component }}-account-auditor"
+  - "{{ component }}-account-reaper"
+  - "{{ component }}-account-replicator"
+  - "{{ component }}-container"
+  - "{{ component }}-container-auditor"
+  - "{{ component }}-container-replicator"
+  - "{{ component }}-container-updater"
+  - "{{ component }}-object"
+  - "{{ component }}-object-auditor"
+  - "{{ component }}-object-replicator"
+  - "{{ component }}-object-updater"
+config_files:
+  - "{{ component }}.conf"
+  - account-server.conf
+  - container-server.conf
+  - object-server.conf

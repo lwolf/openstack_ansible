@@ -1,0 +1,5 @@
+---
+- hosts: nova
+  roles:
+    - common
+    - nova
