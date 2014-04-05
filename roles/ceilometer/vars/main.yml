@@ -1,0 +1,24 @@
+component: ceilometer
+
+agent_compute_packages:
+  - "{{ component }}-agent-compute"
+agent_compute_services:
+  - "{{ component }}-agent-compute"
+agent_compute_config_files:
+  - "{{ component }}.conf"
+
+collector_packages:
+  - "{{ component }}-collector"
+  - "{{ component }}-agent-central"
+collector_services:
+  - "{{ component }}-collector"
+  - "{{ component }}-agent-central"
+collector_config_files:
+  - "{{ component }}.conf"
+
+api_packages:
+  - "{{ component }}-api"
+api_services:
+  - "{{ component }}-api"
+api_config_files:
+  - "{{ component }}.conf"

@@ -1,5 +1,5 @@
 ---
 - hosts: glance
   roles:
-    - common
+    # - common
     - glance

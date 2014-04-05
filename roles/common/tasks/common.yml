@@ -9,6 +9,8 @@
     update_cache: yes 
     cache_valid_time: 600
   with_items:
+    - linux-image-generic-lts-saucy  # only for 12.04
+    - linux-headers-generic-lts-saucy  # only for 12.04
     - python-mysqldb
     - python-software-properties
     - python-pip

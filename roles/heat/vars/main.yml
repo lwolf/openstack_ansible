@@ -1,0 +1,12 @@
+component: heat
+packages:
+  - "{{ component }}-api"
+  - "{{ component }}-api-cfn"
+  - "{{ component }}-engine"
+services:
+  - "{{ component }}-api"
+  - "{{ component }}-api-cfn"
+  - "{{ component }}-engine"
+config_files:
+  - "{{ component }}.conf"
+  - api-paste.ini

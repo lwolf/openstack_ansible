@@ -1,5 +1,5 @@
 ---
-- hosts: swift
+- hosts: heat
   roles:
     # - common
-    - swift
+    - heat

@@ -1,0 +1,5 @@
+---
+- hosts: ceilometer
+  roles:
+    # - common
+    - ceilometer

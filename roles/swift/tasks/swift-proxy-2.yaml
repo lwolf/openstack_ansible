@@ -16,11 +16,11 @@
   ignore_errors: yes
 
 - name: distribute builders with rsync
-  shell: rsync -av /etc/swift/*.builder {{ hostvars[item]|find_ip(storage_network) }}::config
+  shell: rsync -av /etc/swift/*.builder {{ CONTROLLER_IP }}::config
   with_items: groups['swift-storage']
 
 - name: distribute rings with rsync
-  shell: rsync -av /etc/swift/*.ring.gz {{ hostvars[item]|find_ip(storage_network) }}::config
+  shell: rsync -av /etc/swift/*.ring.gz {{ CONTROLLER_IP }}::config
   with_items: groups['swift-storage']
 
 - name: ensure services are started

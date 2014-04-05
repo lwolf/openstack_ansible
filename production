@@ -3,6 +3,19 @@ controller ansible_ssh_host=192.168.0.100 ansible_ssh_user=root
 [all:vars]
 external_ntp_host = uk.pool.ntp.org
 
+[neutron:vars]
+data_network = 10.3.0.0/16
+external_network = 10.4.0.0/16
+external_network_gateway_ip = 10.4.0.3
+external_network_dns_nameservers = 8.8.8.8
+external_network_allocation_pool_start = 10.4.10.100
+external_network_allocation_pool_end = 10.4.250.250
+
+[swift:vars]
+storage_network = 10.5.0.0/16
+replication_network = 10.6.0.0/16
+
+
 [mysql]
 controller
 

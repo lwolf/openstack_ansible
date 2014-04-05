@@ -1,0 +1,28 @@
+component: neutron
+subcomponent: server
+packages:
+  - "{{ component }}-{{ subcomponent }}"
+  - neutron-dhcp-agent
+  - neutron-metadata-agent
+  - neutron-l3-agent
+  - openvswitch-switch
+  - neutron-plugin-openvswitch-agent
+  - openvswitch-common
+
+services:
+  - "{{ component }}-{{ subcomponent }}"
+  - neutron-dhcp-agent
+  - neutron-metadata-agent
+  - neutron-l3-agent
+  - neutron-plugin-openvswitch-agent
+  - openvswitch-switch
+
+config_files:
+  - "{{ component }}.conf"
+  - api-paste.ini
+config_files:
+  - "{{ component }}.conf"
+  - api-paste.ini
+  - dhcp_agent.ini
+  - l3_agent.ini
+  - metadata_agent.ini

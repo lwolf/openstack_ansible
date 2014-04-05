@@ -1,0 +1,35 @@
+---
+- name: ensure {{ component }}-agent-compute packages are installed
+  apt: 
+    pkg: "{{ item }}"
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items: agent_compute_packages
+
+- name: ensure services are stopped
+  service: 
+    name: "{{ item }}"
+    state: stopped
+  with_items: agent_compute_services
+
+- name: ensure {{ component }} sqlite is deleted
+  file: 
+    dest: /var/lib/{{ component }}/{{ component }}.sqlite 
+    state: absent
+
+- name: update configuration files from templates
+  template: 
+    src: etc/{{ component }}/{{ item }}
+    dest: /etc/{{ component }}/{{ item }}
+    owner: "{{ component }}"
+    group: "{{ component }}"
+    mode: 0600
+  with_items: agent_compute_config_files
+
+- name: ensure services are started and enabled
+  service: 
+    name: "{{ item }}"
+    state: restarted 
+    enabled: yes
+  with_items: agent_compute_services

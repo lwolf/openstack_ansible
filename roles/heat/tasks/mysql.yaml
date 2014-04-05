@@ -1,0 +1,12 @@
+---
+- name: ensure heat database is present
+  mysql_db: name=heat
+
+- name: ensure heat database user is present
+  mysql_user: name=heat 
+              host="{{ item }}" 
+              password="{{ heat_mysql_password }}" 
+              priv=heat.*:ALL
+  with_items:
+    - "%"
+    - localhost

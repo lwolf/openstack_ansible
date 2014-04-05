@@ -1,0 +1,7 @@
+---
+- include: mongodb.yml
+- include: rabbitmq.yml
+- include: keystone.yml
+- include: ceilometer-api.yml
+- include: ceilometer-collector.yml
+- include: nova-compute.yml

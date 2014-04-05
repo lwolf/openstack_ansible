@@ -13,6 +13,10 @@ CONTROLLER_IP: 192.168.0.100
 COMPUTE1_IP: 192.168.0.101
 
 
+##
+external_network_name: public
+##
+
 ntp_host: "{{ CONTROLLER_IP }}"
 
 mysql_host: "{{ CONTROLLER_IP }}"

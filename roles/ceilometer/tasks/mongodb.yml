@@ -1,0 +1,11 @@
+---
+- name: ensure ceilometer database user is present
+  mongodb_user: 
+    login_host: "{{ CONTROLLER_IP }}"
+    database: ceilometer
+    user: ceilometer
+    password: "{{ ceilometer_mongodb_password }}" 
+    roles:
+      - readWrite
+      - dbAdmin
+    state: present
