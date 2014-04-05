@@ -1,0 +1,72 @@
+- name: update apt cache
+  apt: 
+    update_cache: yes
+
+- name: ensure required base packages are present
+  apt: 
+    pkg: "{{ item }}" 
+    state: latest 
+    update_cache: yes 
+    cache_valid_time: 600
+  with_items:
+    - python-mysqldb
+    - python-software-properties
+    - python-pip
+    - mc
+    - git
+    - vim
+    - ntp
+    - python-mysqldb
+    - mysql-server
+    - python-software-properties
+    - python-setuptools
+
+- name: Install PIP
+  easy_install: 
+    name: pip
+
+- name: Install system packages
+  pip: name={{ item }} state=present
+  with_items: 
+    - python-ceilometerclient
+    - python-cinderclient
+    - python-glanceclient
+    - python-heatclient
+    - python-keystoneclient
+    - python-neutronclient
+    - python-novaclient
+    - python-swiftclient
+
+
+- name: Write hosts file
+  template: 
+    src: etc/hosts.tmpl
+    dest: /etc/hosts
+
+- name: ensure needed repositories are present
+  command: apt-add-repository -y "{{ item }}"
+  with_items: openstack_repositories
+
+- name: upgrade software packages to latest version
+  apt: 
+    update_cache: yes
+    upgrade: dist 
+
+- name: autoremove unneeded packages
+  command: apt-get -y autoremove
+
+- name: register running kernel version
+  command: uname -r
+  register: running_kernel
+
+- name: register installed kernel version
+  shell: dpkg -l | grep "linux-image-[0-9]" | sort | tail -1 | perl -ane 'print substr($F[1], 12), "\n"'
+  register: installed_kernel
+
+- name: set clocks to public ntp server
+  command: ntpdate {{ external_ntp_host }}
+  ignore_errors: yes
+
+- name: save system clock to hardware
+  command: hwclock --systohc
+

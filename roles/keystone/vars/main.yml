@@ -1,0 +1,5 @@
+---
+component: keystone
+packages: "{{ component }}"
+services: "{{ component }}"
+config_files: "{{ component }}.conf"

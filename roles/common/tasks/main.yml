@@ -1,0 +1,6 @@
+---
+
+- include: common.yml
+- include: mysql.yml tags=mysql
+- include: mongodb.yml tags=mongodb
+- include: rabbitmq.yml tags=rabbitmq

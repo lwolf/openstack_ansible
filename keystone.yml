@@ -1,0 +1,5 @@
+---
+- hosts: keystone
+  roles:
+    - common
+    - keystone

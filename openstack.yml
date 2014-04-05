@@ -1,0 +1,10 @@
+- include: keystone.yml
+- include: glance.yml
+- include: nova.yml
+
+# - include: roles/swift/swift.yaml
+# - include: roles/neutron/neutron.yaml
+# - include: roles/dashboard/dashboard.yaml
+# - include: roles/heat/heat.yaml
+# - include: roles/ceilometer/ceilometer.yaml
+# - include: roles/frontend/frontend.yaml

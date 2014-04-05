@@ -1,0 +1,12 @@
+---
+component: glance 
+packages:
+  - glance
+services:
+  - glance-api
+  - glance-registry
+config_files:
+  - glance-api.conf
+  - glance-api-paste.ini
+  - glance-registry.conf
+  - glance-registry-paste.ini
