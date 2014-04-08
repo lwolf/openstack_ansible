@@ -2,7 +2,10 @@
 - include: glance.yml
 - include: nova.yml
 - include: swift.yml
-- include: neutron.yml
+
 - include: dashboard.yml
-# - include: heat.yml
 - include: ceilometer.yml
+- include: cinder.yml
+
+#- include: heat.yml
+- include: neutron.yml

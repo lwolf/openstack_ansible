@@ -12,12 +12,35 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu12.04-cloud-server"
 
+  swift_file_to_disk = '.vagrant/swift-storage-extradisk.vdi'
+  cinder_file_to_disk = '.vagrant/cinder-volume-extradisk.vdi'
+
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
+
   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
+
+  config.vm.define "controller" do |machine|
+    machine.vm.network :private_network, ip: "192.168.0.100",
+                       :netmask => "255.255.0.0"
+    machine.vm.hostname = "controller"
+    machine.vm.provider :virtualbox do |v| 
+      v.customize ["modifyvm", :id, "--memory", 4096]
+
+      v.customize ["createhd", "--filename", swift_file_to_disk, "--size", 4096]
+      v.customize ["createhd", "--filename", cinder_file_to_disk, "--size", 4096]
+      v.customize ["storageattach", :id, "--storagectl", "SATAController",
+                   "--port", 1, "--device", 0, "--type", "hdd",
+                   "--medium", swift_file_to_disk]
+      v.customize ["storageattach", :id, "--storagectl", "SATAController",
+                   "--port", 2, "--device", 0, "--type", "hdd",
+                   "--medium", cinder_file_to_disk]
+
+    end
   end
+
+
+  
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -25,8 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.0.100"
-
+  
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
