@@ -1,28 +1,45 @@
 component: neutron
-subcomponent: server
-packages:
-  - "{{ component }}-{{ subcomponent }}"
-  - neutron-dhcp-agent
-  - neutron-metadata-agent
-  - neutron-l3-agent
-  - openvswitch-switch
-  - neutron-plugin-openvswitch-agent
+
+neutron_api_packages:
+  - "{{ component }}-server"
+######################
   - openvswitch-common
-
-services:
-  - "{{ component }}-{{ subcomponent }}"
-  - neutron-dhcp-agent
-  - neutron-metadata-agent
-  - neutron-l3-agent
-  - neutron-plugin-openvswitch-agent
   - openvswitch-switch
+  - "{{ component }}-plugin-openvswitch"
+  - "{{ component }}-plugin-openvswitch-agent"
 
-config_files:
+neutron_api_services:
+  - "{{ component }}-server"
+neutron_api_config_files:
   - "{{ component }}.conf"
   - api-paste.ini
-config_files:
+
+
+neutron_network_packages:
+    - neutron-dhcp-agent
+    - neutron-metadata-agent
+    - neutron-l3-agent
+neutron_network_services:
+    - neutron-dhcp-agent
+    - neutron-metadata-agent
+    - neutron-l3-agent
+neutron_network_config_files:
   - "{{ component }}.conf"
   - api-paste.ini
   - dhcp_agent.ini
   - l3_agent.ini
   - metadata_agent.ini
+
+neutron_openvswitch_packages:
+  - openvswitch-common
+  - openvswitch-switch
+  - "{{ component }}-plugin-openvswitch"
+  - "{{ component }}-plugin-openvswitch-agent"
+  # - openvswitch-datapath-dkms
+neutron_openvswitch_services:
+  - "{{ component }}-plugin-openvswitch-agent"
+  - openvswitch-switch
+neutron_openvswitch_config_files:
+  - "{{ component }}.conf"
+  - api-paste.ini
+

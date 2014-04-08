@@ -1,22 +1,32 @@
 ---
 
-- name: ensure {{ component }} packages are installed
+- name: create cinder-volumes volume group
+  lvg:
+    vg: cinder-volumes
+    pvs: "/dev/sdc"
+    state: present
+
+- name: ensure {{ component }}-volume packages are installed
   apt: 
     pkg: "{{ item }}"
     state: latest 
     update_cache: yes 
     cache_valid_time: 600
-  with_items: packages
+  with_items: 
+    - "{{ component }}-volume"
+    - lvm2
+    - qemu-utils
+    - tgt
 
 - name: ensure services are stopped
   service: 
     name: "{{ item }}"
     state: stopped
-  with_items: services
+  with_items: volume_services
 
 - name: ensure {{ component }} sqlite is deleted
   file: 
-    dest: /var/lib/{{ component }}/{{ component }}.sqlite
+    dest: /var/lib/{{ component }}/{{ component }}.sqlite 
     state: absent
 
 - name: update configuration files from templates
@@ -26,15 +36,17 @@
     owner: "{{ component }}"
     group: "{{ component }}"
     mode: 0600
-  with_items: config_files
+  with_items: 
+    - "{{ component }}.conf"
+    - api-paste.ini
 
 - name: ensure database is synced
-  command: /usr/bin/{{ component }}-manage db_sync
+  command: /usr/bin/{{ component }}-manage db sync
 
 - name: ensure services are started and enabled
   service: 
     name: "{{ item }}"
     state: restarted 
     enabled: yes
-  with_items: services
+  with_items: volume_services
 

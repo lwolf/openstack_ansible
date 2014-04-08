@@ -1,0 +1,5 @@
+---
+- hosts: cinder
+  roles:
+    # - common
+    - cinder

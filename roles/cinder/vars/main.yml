@@ -1,0 +1,8 @@
+component: cinder
+volume_services:
+  - "{{ component }}-volume"
+  - tgt
+scheduler_services:
+  - "{{ component }}-scheduler"
+api_services:
+  - "{{ component }}-api"

@@ -1,6 +1,12 @@
+
+- name: ensure needed repositories are present
+  command: apt-add-repository -y {{ item }}
+  with_items: openstack_repositories
+
 - name: update apt cache
   apt: 
     update_cache: yes
+
 
 - name: ensure required base packages are present
   apt: 
@@ -22,37 +28,25 @@
     - mysql-server
     - python-software-properties
     - python-setuptools
+    - python-oslo.config
+    - python-oslo.rootwrap
+    - python-oslo.messaging
+    - python-oslo.vmware
 
 - name: Install PIP
   easy_install: 
     name: pip
 
-- name: Install system packages
-  pip: name={{ item }} state=present
-  with_items: 
-    - python-ceilometerclient
-    - python-cinderclient
-    - python-glanceclient
-    - python-heatclient
-    - python-keystoneclient
-    - python-neutronclient
-    - python-novaclient
-    - python-swiftclient
-
-
-- name: Write hosts file
-  template: 
-    src: etc/hosts.tmpl
-    dest: /etc/hosts
-
-- name: ensure needed repositories are present
-  command: apt-add-repository -y "{{ item }}"
-  with_items: openstack_repositories
-
 - name: upgrade software packages to latest version
   apt: 
     update_cache: yes
     upgrade: dist 
+
+# - name: Write hosts file
+#   template: 
+#     src: etc/hosts.tmpl
+#     dest: /etc/hosts
+
 
 - name: autoremove unneeded packages
   command: apt-get -y autoremove

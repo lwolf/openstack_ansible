@@ -33,7 +33,6 @@
 - name: set permissions to log
   shell: chown {{ component }}:{{ component }} /var/log/{{component}}/{{component}}.log
 
-
 - name: Update cron to flush tokens every hour
   cron: name="flush tokens" special_time='hourly' job="/usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&1"
 
