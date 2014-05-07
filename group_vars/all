@@ -15,8 +15,11 @@ CONTROLLER_EXT_IP: 10.0.2.15
 
 ##
 external_network_name: public
-##
+external_network: 10.0.2.0/16
+management_network: 192.168.0.0/16
+api_network: 172.44.0.0/16
 
+##
 ntp_host: "{{ CONTROLLER_IP }}"
 
 mysql_host: "localhost"

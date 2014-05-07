@@ -1,6 +1,6 @@
 #!/bin/sh
-ip addr del {{ CONTROLLER_EXT_IP }}/16 dev eth3
-ip link set eth3 up
-ip link set eth3 promisc on
-ip addr add {{ CONTROLLER_EXT_IP }}/16 dev br-ex
+ip addr del {{ external_network }} dev eth0
+ip link set eth0 up
+ip link set eth0 promisc on
+ip addr add {{ external_network }} dev br-ex
 ip link set br-ex up

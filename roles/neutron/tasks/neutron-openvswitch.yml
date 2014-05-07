@@ -83,8 +83,8 @@
     state: restarted 
     enabled: yes
 
-# - name: ensure ovs internal bridge is present
-#   command: /usr/bin/ovs-vsctl -- --may-exist add-br br-int
+- name: ensure ovs internal bridge is present
+  command: /usr/bin/ovs-vsctl -- --may-exist add-br br-int
 
 - name: ensure neutron openvswitch service is started and enabled
   service: 

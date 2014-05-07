@@ -8,4 +8,5 @@
 - include: cinder.yml
 
 #- include: heat.yml
-- include: neutron.yml
+# - include: neutron.yml
+- include: frontend.yml
